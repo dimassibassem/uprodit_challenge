@@ -15,5 +15,5 @@ jobs:
         uses: adambirds/sync-github-to-gitlab-action@v1.1.0
         with:
           destination_repository: git@gitlab.com:dimassibassem99/uprodit_challenge.git
-          destination_branch_name: main  # Or your default branch
+          destination_branch_name: master  # Or your default branch
           destination_ssh_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY}}

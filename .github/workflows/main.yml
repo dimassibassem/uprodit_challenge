@@ -16,7 +16,7 @@ jobs:
       - name: Run Mirror Script
         run: |
           # Add the mirror script execution command here
-          ./mirror.sh
+          ../ci/mirror.sh
 
           # Add the commands for pushing to GitLab
           git remote add gitlab git@gitlab.com:dimassibassem99/uprodit_challenge.git

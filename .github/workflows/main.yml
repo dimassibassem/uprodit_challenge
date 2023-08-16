@@ -18,6 +18,7 @@ jobs:
           GITLAB_SSH_PRIVATE_KEY: ${{ secrets.GITLAB_SSH_PRIVATE_KEY}}
         run:
           mkdir -p ~/.ssh/
+          touch ~/.ssh/id_rsa
           echo "${{ secrets.GITLAB_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts

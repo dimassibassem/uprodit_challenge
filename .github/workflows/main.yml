@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  sync:
+  mirror:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -14,6 +14,6 @@ jobs:
       - name: Push to GitLab
         uses: adambirds/sync-github-to-gitlab-action@v1.1.0
         with:
-          destination_repository: git@gitlab.com:YOUR_GITLAB_NAMESPACE/YOUR_GITLAB_PROJECT.git
+          destination_repository: git@gitlab.com:dimassibassem99/uprodit_challenge.git
           destination_branch_name: main  # Or your default branch
           destination_ssh_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY}}

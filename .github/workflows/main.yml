@@ -17,7 +17,7 @@ jobs:
         env:
           GIT_SSH_COMMAND: 'ssh -i ${{ secrets.GITLAB_SSH_PRIVATE_KEY}} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
         run: |
-          git config --global user.name "Bassem Dimassi"
+          git config --global user.name "dimassibassem99"
           git config --global user.email "dimassibassem99@gmail.com"
           git remote add gitlab git@gitlab.com:dimassibassem99/uprodit_challenge.git
           git push gitlab master # or the name of your default branch

@@ -21,8 +21,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
           # Set Git configuration
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "dimassibassem99@gmail.com"
+          git config --global user.name "Bassem Dimassi"
 
           # Add GitLab remote
           git remote add gitlab git@gitlab.com:dimassibassem99/uprodit_challenge.git

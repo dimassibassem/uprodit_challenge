@@ -22,4 +22,4 @@ To get started working locally with the project:
 
 You can also use the provided Docker setup by running:
 
-live preview of the website is available [here](https://uprodit-challenge.vercel.app/)
+Live preview of the website is available [here](https://uprodit-challenge.vercel.app/)

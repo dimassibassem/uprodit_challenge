@@ -1,6 +1,5 @@
-import {useState, useEffect} from 'react';
+import {FC, useEffect, useRef} from 'react';
 import {getImage} from '../services/image';
-
 import {FiStar} from 'react-icons/fi'
 import {
     Box,
@@ -11,22 +10,30 @@ import {
     Flex, Icon,
 } from '@chakra-ui/react'
 import {User} from "../services/search/types.ts";
+import {useQuery} from "@tanstack/react-query";
+import {useIntersectionObserver} from "../hooks";
 
-const ProfileCard = ({user}: { user: User }) => {
-    const [imageData, setImageData] = useState('');
-    useEffect(() => {
-        const fetchImage = async () => {
-            const image = await getImage(user.image_id);
-            setImageData(`data:image/png;base64,${image.b64Content}`);
-        };
-        fetchImage();
-    }, [user.image_id]);
-
+const ProfileCard: FC<{ user: User }> = ({user}) => {
     const url = `https://www.uprodit.com/profile/personal/${user.id}`;
+    const ref = useRef<HTMLDivElement | null>(null)
+    const entry = useIntersectionObserver(ref, {})
+    const isVisible = !!entry?.isIntersecting
+    const {data: image,refetch} = useQuery(['image', user.image_id],
+        () => getImage(user.image_id),
+    {
+            enabled: false, // Disable initial fetch
+        });
+    const imageData = image ? `data:image/png;base64,${image.b64Content}` : '';
+    useEffect(() => {
+        if (isVisible) {
+            refetch(); // Fetch image data when component is in view
+        }
+    }, [isVisible, refetch]);
 
     return (
         <>
             <Box
+                ref={ref}
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
@@ -36,14 +43,8 @@ const ProfileCard = ({user}: { user: User }) => {
                 rounded="xl"
                 shadow="lg"
             >
-                <Image src={imageData}
-                       w={'full'}
-                       h={'300px'}
-                       alt={user.denomination}
-                       fallbackSrc="https://via.placeholder.com/300"
-                       roundedTop="xl"
-                       borderRadius={10}
-                />
+                {isVisible && <Image src={imageData} w={'full'} h={'300px'} alt={user.denomination}
+                                     fallbackSrc="https://via.placeholder.com/300" roundedTop="xl" borderRadius={10}/>}
                 <Box p="6">
                     <Flex mt="1" justifyContent="center" alignContent="center">
                         <Box

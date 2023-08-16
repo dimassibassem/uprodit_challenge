@@ -1,57 +1,32 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {search} from '../services/search';
 import ProfileCard from "./ProfileCard.tsx";
 import Footer from "./Footer.tsx";
 import {SearchQuerySettings, User} from "../services/search/types.ts";
 import {Text, Button, Flex, Input, Box} from "@chakra-ui/react";
 import {useDebounce} from "../hooks";
+import {useQuery} from "@tanstack/react-query";
+import {AxiosError} from "axios";
+import SkeletonCard from "./Skeleton.tsx";
 
 const MainContent = () => {
     const [query, setQuery] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState<User[]>([]);
     const debouncedValue = useDebounce<string>(query, 500)
     const searchQuerySettings = {
         startIndex: 0,
         maxResults: 20,
     } as SearchQuerySettings;
-
-    useEffect(() => {
-        setIsLoading(true);
-        if (debouncedValue) {
-            setUsers([])
-            search({
-                ...searchQuerySettings,
-                terms: query,
-            }).then((users) => {
-                console.log(users);
-                setUsers(users)
-                setIsLoading(false);
-            })
-        }
-    }, [debouncedValue, query])
-
-    const fetchUsers = async () => {
-        setIsLoading(true);
-        const users = await search();
-        setUsers(users);
-        setIsLoading(false);
-    };
-
-    useEffect(() => {
-        fetchUsers()
-    }, []);
-
-    const onSearchClick = async () => {
-        setIsLoading(true);
-        const searchedUsers = await search({
+    const {isLoading, error, data, refetch} =
+        useQuery<User[], AxiosError>(['search', debouncedValue],
+            () => search({
             ...searchQuerySettings,
             terms: query,
-        });
-        setUsers(searchedUsers);
-        setIsLoading(false);
+        })
+    );
+    const handleSearchClick = () => {
+        refetch();
     };
-    console.log(isLoading);
+
     return (
         <Box>
             <Flex
@@ -60,11 +35,12 @@ const MainContent = () => {
                 w="full" alignItems="center" justifyContent="center"
             >
                 <Input maxW={'500px'} value={query} onChange={(e) => setQuery(e.target.value)}/>
-                <Button onClick={onSearchClick}>Search</Button>
+                <Button onClick={handleSearchClick}>Search</Button>
             </Flex>
 
             {isLoading ? (
-                    <Text>Loading...</Text>
+
+                   <SkeletonCard   />
                 ) :
                 <Flex
                     p={6}
@@ -73,9 +49,10 @@ const MainContent = () => {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    {users && users.map((user) => <ProfileCard key={user.id} user={user}/>)}
+                    {data && data.map((user) => <ProfileCard key={user.id} user={user}/>)}
                 </Flex>
             }
+            {error && <Text>Error: {error.message || 'An error occurred'}</Text>}
             <Footer/>
         </Box>
     );

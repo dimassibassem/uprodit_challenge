@@ -1,27 +1,24 @@
-# React + TypeScript + Vite
+# Uprodit Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Context
 
-Currently, two official plugins are available:
+This project is part of a [challenge](https://doc.uprodit.com/docs/challenge/) started by [Uprodit](https://www.uprodit.com/). The goal of the challenge is to clone a [search engine](https://www.uprodit.com/profile/all/search/perso) used to filter people based on different criteria and integrate it with the existing [Uprodit APIs](https://doc.uprodit.com/docs/api/).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tools
 
-## Expanding the ESLint configuration
+For this challenge, we are using:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [React](https://reactjs.org/) 
+- with [Vite](https://vitejs.dev/)
+- Typescript
+- The [Chakra UI](https://chakra-ui.com/) component library
 
-- Configure the top-level `parserOptions` property like this:
+## Local setup
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+To get started working locally with the project:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Clone this repository
+- Run `npm run dev` inside the root folder
+
+You can also use the provided Docker setup by running:
+

@@ -3,29 +3,17 @@ name: CI/CD
 on:
   push:
     branches:
-      - master # or the name of your default branch
+      - master
 
 jobs:
-  mirror:
+  sync:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Push to GitLab
-        env:
-          GITLAB_SSH_PRIVATE_KEY: ${{ secrets.GITLAB_SSH_PRIVATE_KEY}}
-        run:
-          mkdir -p ~/.ssh/
-          touch ~/.ssh/id_rsa
-          echo "${{ secrets.GITLAB_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          touch ~/.ssh/known_hosts
-          ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
-          git remote add gitlab
-          git config --global user.email "dimassibassem99@gmail.com"
-          git config --global user.name "dimassibassem"
-          git push gitlab master
-
-
+        uses: adambirds/sync-github-to-gitlab-action@v1.1.0
+        with:
+          destination_repository: git@gitlab.com:YOUR_GITLAB_NAMESPACE/YOUR_GITLAB_PROJECT.git
+          destination_branch_name: main  # Or your default branch
+          destination_ssh_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY}}

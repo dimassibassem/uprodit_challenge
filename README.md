@@ -13,6 +13,14 @@ For this challenge, we are using:
 - Typescript
 - The [Chakra UI](https://chakra-ui.com/) component library
 
+## CI / CD
+Continuous integration is handled by [Github Actions](https://github.com/features/actions)  and continuous deployment by [Vercel](https://vercel.com/).
+Using CI to create a mirror of the repository on Gitlab.
+
+[Gitlab Repository](https://gitlab.com/dimassibassem99/uprodit_challenge)
+
+Live preview of the website is available [here](https://uprodit-challenge.vercel.app/)
+
 ## Local setup
 
 To get started working locally with the project:
@@ -22,4 +30,3 @@ To get started working locally with the project:
 
 You can also use the provided Docker setup by running:
 
-Live preview of the website is available [here](https://uprodit-challenge.vercel.app/)

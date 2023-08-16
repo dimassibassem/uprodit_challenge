@@ -13,11 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Set up SSH key
+        run: echo "${{ secrets.GITLAB_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        env:
+          GITLAB_SSH_PRIVATE_KEY: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
+
+      - name: Make SSH key read-only
+        run: chmod 600 ~/.ssh/id_rsa
+
+      - name: Add GitLab SSH fingerprint
+        run: ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+
       - name: Run Mirror Script
         run: |
           chmod +x ci/mirror.sh
           ci/mirror.sh
-
-          # Add the commands for pushing to GitLab
-          git remote add gitlab git@gitlab.com:dimassibassem99/uprodit_challenge.git
-          git push -f gitlab master

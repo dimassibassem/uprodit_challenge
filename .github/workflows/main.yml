@@ -1,0 +1,45 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run mirror script
+        run: |
+          chmod +x ./ci/mirror.sh
+          setsid ./ci/mirror.sh
+
+  build:
+    runs-on: ubuntu-latest
+    needs: mirror
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run build scripts
+        run: |
+          chmod +x ./ci/deliver.sh
+          ./ci/deliver.sh
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run deploy script
+        run: |
+          chmod +x ./ci/deploy.sh
+          ./ci/deploy.sh
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'

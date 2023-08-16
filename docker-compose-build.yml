@@ -1,0 +1,7 @@
+version: '3.3'
+
+services:
+  uprodit_react:
+    restart: always
+    image: uprodit_react:latest
+    build: .

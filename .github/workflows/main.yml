@@ -1,8 +1,11 @@
-name: Push to GitLab
+name: CI/CD
+
 on:
   push:
     branches:
-      - main
+      - master
+      - develop
+
 
 jobs:
   push_to_gitlab:
@@ -16,4 +19,4 @@ jobs:
           GITLAB_TOKEN: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
         run: |
           git remote add gitlab https://gitlab.com/dimassibassem99/uprodit_challenge.git
-          git push gitlab HEAD:main
+          git push gitlab HEAD:mainain

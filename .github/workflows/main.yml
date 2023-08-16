@@ -24,4 +24,8 @@ jobs:
           touch ~/.ssh/known_hosts
           ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
           git remote add gitlab
+          git config --global user.email "dimassibassem99@gmail.com"
+          git config --global user.name "dimassibassem"
           git push gitlab master
+
+

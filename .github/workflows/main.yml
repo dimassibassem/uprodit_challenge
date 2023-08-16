@@ -1,19 +1,23 @@
-name: CI/CD
+name: CI
 
 on:
   push:
     branches:
-      - master
+      - master # or the name of your default branch
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Push to GitLab
-        uses: adambirds/sync-github-to-gitlab-action@v1.1.0
-        with:
-          destination_repository: git@gitlab.com:dimassibassem99/uprodit_challenge.git
-          destination_branch_name: master  # Or your default branch
-          destination_ssh_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY}}
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        run: |
+          git config --global user.name "Dimassi Bassem"
+          git config --global user.email "dimassibassem99@gmail.com"
+          git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/dimassibassem99/uprodit_challenge.git
+          git push gitlab master # or the name of your default branch

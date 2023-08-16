@@ -17,7 +17,7 @@ jobs:
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
         run: |
-          git config --global user.name "dimassibassem99"
+          git config --global user.name "Bassem Dimassi"
           git config --global user.email "dimassibassem99@gmail.com"
           git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/dimassibassem99/uprodit_challenge.git
           git push gitlab master # or the name of your default branch

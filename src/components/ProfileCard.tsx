@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import {getImage} from '../services/image';
 import {FiStar} from 'react-icons/fi'
 import {
@@ -16,6 +16,7 @@ import {useIntersectionObserver} from "../hooks";
 const ProfileCard: FC<{ user: User }> = ({user}) => {
     const url = `https://www.uprodit.com/profile/personal/${user.id}`;
     const ref = useRef<HTMLDivElement | null>(null)
+    const [isImageFetched, setIsImageFetched] = useState(false);
     const entry = useIntersectionObserver(ref, {})
     const isVisible = !!entry?.isIntersecting
     const {data: image,refetch} = useQuery(['image', user.image_id],
@@ -25,10 +26,11 @@ const ProfileCard: FC<{ user: User }> = ({user}) => {
         });
     const imageData = image ? `data:image/png;base64,${image.b64Content}` : '';
     useEffect(() => {
-        if (isVisible) {
-            refetch(); // Fetch image data when component is in view
+        if (isVisible && !isImageFetched) {
+            refetch(); // Fetch image data when component is in view and image is not fetched yet
+            setIsImageFetched(true);
         }
-    }, [isVisible, refetch]);
+    }, [isVisible, isImageFetched, refetch]);
 
     return (
         <>
@@ -44,7 +46,7 @@ const ProfileCard: FC<{ user: User }> = ({user}) => {
                 shadow="lg"
             >
                 {isVisible && <Image src={imageData} w={'full'} h={'300px'} alt={user.denomination}
-                                     fallbackSrc="https://via.placeholder.com/300" roundedTop="xl" borderRadius={10}/>}
+                                     fallbackSrc={'https://via.placeholder.com/300'} roundedTop="xl" borderRadius={10}/>}
                 <Box p="6">
                     <Flex mt="1" justifyContent="center" alignContent="center">
                         <Box
@@ -65,10 +67,10 @@ const ProfileCard: FC<{ user: User }> = ({user}) => {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        {user.specialities.map((speciality: string) => {
+                        {user.specialities.map((speciality,index) => {
                                 return (
                                     <Badge
-                                        key={user.id + speciality}
+                                        key={user.id+index}
                                         px={2}
                                         py={1}
                                         bg={'gray.200'}

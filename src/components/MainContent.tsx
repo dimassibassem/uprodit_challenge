@@ -37,9 +37,7 @@ const MainContent = () => {
                 <Input maxW={'500px'} value={query} onChange={(e) => setQuery(e.target.value)}/>
                 <Button onClick={handleSearchClick}>Search</Button>
             </Flex>
-
             {isLoading ? (
-
                    <SkeletonCard   />
                 ) :
                 <Flex

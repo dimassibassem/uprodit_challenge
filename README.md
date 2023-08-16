@@ -22,3 +22,6 @@ To get started working locally with the project:
 
 You can also use the provided Docker setup by running:
 
+project is deployed [here](https://uprodit-challenge.vercel.app/) on vercel
+
+```

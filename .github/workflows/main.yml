@@ -15,7 +15,7 @@ jobs:
 
       - name: Run Mirror Script
         run: |
-          # Add the mirror script execution command here
+          chmod +x ci/mirror.sh
           ci/mirror.sh
 
           # Add the commands for pushing to GitLab

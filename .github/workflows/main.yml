@@ -17,3 +17,7 @@ jobs:
         run: |
           # Add the mirror script execution command here
           ./mirror.sh
+
+          # Add the commands for pushing to GitLab
+          git remote add gitlab git@gitlab.com:dimassibassem99/uprodit_challenge.git
+          git push -f gitlab master
